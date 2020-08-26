@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './LogIn.css';
+import Header from '../AuthTopBar/Header'
 
 type state = {
     user: string,
@@ -21,7 +22,7 @@ class LogIn extends Component<any, state>{
     }
     
     componentDidMount(){
-        document.body.style.backgroundColor = "orange"
+        document.body.style.backgroundColor = "#85B3D1FF"
     }
 
     handleSubmit(event: any){
@@ -53,17 +54,20 @@ class LogIn extends Component<any, state>{
     }
 
     render(){
-        const { user, password, hasErrors} = this.state;
+        const { user, password, hasErrors } = this.state;
         return(
-            <div className="formContainer">
-                <h2>Inicio de sessión</h2>
-                {hasErrors && (<div className="error"> Algunos campos están vacíos o contienen valores incorrectos. </div>) }
-                <form>
-                        <input type="text" placeholder="Introduce tu usuario" name="user" value = {user} onChange={this.handleChange} required/>
-                        <input type="password" placeholder="Introduce tu contraseña" name="password" value = {password} onChange={this.handleChange} required/>
-                        <button type="submit" onClick = {this.handleSubmit}>Login</button>
-                    </form>
-            </div>  
+            <>
+                <Header/>
+                <div className="formContainer">
+                    <h2>Inicio de sessión</h2>
+                    {hasErrors && (<div className="error"> Algunos campos están vacíos o contienen valores incorrectos. </div>) }
+                    <form>
+                            <input type="text" placeholder="Introduce tu usuario" name="user" value = {user} onChange={this.handleChange} required/>
+                            <input type="password" placeholder="Introduce tu contraseña" name="password" value = {password} onChange={this.handleChange} required/>
+                            <button className = "submitButton" type="submit" onClick = {this.handleSubmit}>Login</button>
+                        </form>
+                </div>
+            </>      
         )
     }
 }
