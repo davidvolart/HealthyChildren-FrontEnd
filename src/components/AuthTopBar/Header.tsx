@@ -11,13 +11,14 @@ class Header extends Component<any, any>{
     }
 
     handleOnClickRegister(event: any){
-        this.props.history.replace({ pathname: `/signup`})
+        const pathname = this.props.isLogIn ? `/signup` : `/login` 
+        this.props.history.replace({ pathname: pathname})
     }
 
     render(){
         return(
             <div className="headerContainer">
-                <button onClick = {this.handleOnClickRegister} className="headerButton">Registrate</button>
+                <button onClick = {this.handleOnClickRegister} className="headerButton">{this.props.isLogIn ?  'Registrate' : 'Inicia Sessión'}</button>
             </div>  
         )
     }

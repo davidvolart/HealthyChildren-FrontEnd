@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import './LogIn.css';
 import Header from '../AuthTopBar/Header'
+import './LogIn.css'
 
 type state = {
     user: string,
@@ -57,14 +57,14 @@ class LogIn extends Component<any, state>{
         const { user, password, hasErrors } = this.state;
         return(
             <>
-                <Header/>
+                <Header isLogIn/>
                 <div className="formContainer">
                     <h2>Inicio de sessión</h2>
                     {hasErrors && (<div className="error"> Algunos campos están vacíos o contienen valores incorrectos. </div>) }
                     <form>
                             <input type="text" placeholder="Introduce tu usuario" name="user" value = {user} onChange={this.handleChange} required/>
                             <input type="password" placeholder="Introduce tu contraseña" name="password" value = {password} onChange={this.handleChange} required/>
-                            <button className = "submitButton" type="submit" onClick = {this.handleSubmit}>Login</button>
+                            <button className="submitButton" type="submit" onClick = {this.handleSubmit}>Login</button>
                         </form>
                 </div>
             </>      

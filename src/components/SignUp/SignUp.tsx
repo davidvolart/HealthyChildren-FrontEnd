@@ -25,7 +25,7 @@ class SignUp extends Component<any, any>{
                             <input type="text" placeholder="Introduce tu nombre" name="name"  required/>
                             <input type="number" min="0" step=".01" placeholder="Introduce tu peso en KG" name="weigth"  required/>
                             <input type="number" min="0" step=".01" placeholder="Introduce tu altura en metros" name="heigth"  required/>
-                            <button className = "submitButton" type="submit">Sign up</button>
+                            <button className = "submitSignUp" type="submit">Sign up</button>
                         </form>
                 </div>
             </>     
