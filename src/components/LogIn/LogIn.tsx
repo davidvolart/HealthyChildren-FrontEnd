@@ -1,21 +1,16 @@
 import React, {Component} from 'react';
 import Header from '../AuthTopBar/Header'
 import './LogIn.css'
+import axios from 'axios'
 
-type state = {
-    user: string,
-    password: string,
-    hasErrors: boolean,
-}
-
-class LogIn extends Component<any, state>{
+class LogIn extends Component<any, any>{
     
-    constructor(props: state){
+    constructor(props: any){
         super(props)
         this.state = {
-            user: '',
+            email: '',
             password: '',
-            hasErrors: false,
+            hasErrors: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -26,16 +21,27 @@ class LogIn extends Component<any, state>{
     }
 
     handleSubmit(event: any){
-        if(this.validation(this.state)){
-            alert('Credentials are valid')
-        }else{
-            this.setState({hasErrors: true})
-        }
         event.preventDefault();
+
+        if(this.validation(this.state)){
+            const body = {
+                "email" : this.state.email,
+                "password" : this.state.password,
+            }
+    
+            const headers = {'Content-Type': 'application/json'}
+            axios.post('http://0.0.0.0:8000/api/user/login/', body, {headers})
+                    .then(res => alert('User is ok'))
+                    .catch(error => this.setState({hasErrors: 'No exite un usuario con estas credenciales. Vuelve a intentarlo.'}))
+        }
     }
 
     validation(app: any): boolean{
-        if(app.password.length < 8 || !this.validateEmail(app.user)){
+        if(!this.validateEmail(app.email)){
+            this.setState({hasErrors: 'El email no es valido.'})
+            return false
+        }else if(app.password.length < 8){
+            this.setState({hasErrors: 'La contraseña debe tener minimo 8 caracteres.'})
             return false
         }
         return true
@@ -54,17 +60,17 @@ class LogIn extends Component<any, state>{
     }
 
     render(){
-        const { user, password, hasErrors } = this.state;
+        const { email, password, hasErrors } = this.state;
         return(
             <>
                 <Header isLogIn/>
                 <div className="formContainer">
                     <h2>Inicio de sessión</h2>
-                    {hasErrors && (<div className="error"> Algunos campos están vacíos o contienen valores incorrectos. </div>) }
-                    <form>
-                            <input type="text" placeholder="Introduce tu usuario" name="user" value = {user} onChange={this.handleChange} required/>
+                    {hasErrors && (<div className="error"> {this.state.hasErrors} </div>) }
+                    <form action="" onSubmit={this.handleSubmit}>
+                            <input type="text" placeholder="Introduce tu usuario" name="email" value = {email} onChange={this.handleChange} required/>
                             <input type="password" placeholder="Introduce tu contraseña" name="password" value = {password} onChange={this.handleChange} required/>
-                            <button className="submitButton" type="submit" onClick = {this.handleSubmit}>Login</button>
+                            <button className="submitButton" type="submit">Login</button>
                         </form>
                 </div>
             </>      
